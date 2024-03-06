@@ -1,0 +1,44 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+int *a;
+
+void generate(int seed , int size);
+int main(int argc, char** argv);
+
+void generate(int seed ,int size) {
+    srand(seed); a = (int*)malloc(sizeof(int)*size);
+    for(int i = 0; i < size; ++i) a[i] = 1 + rand() % 69000;
+}
+
+int main(int argc, char** argv){
+    int seed = 69;
+    int size = 10;
+    if(argc > 2) seed = strtof(argv[2], NULL);
+    if(argc > 1) size = strtof(argv[1], NULL);
+    
+    generate(seed,size);
+
+    // Find max
+    int max = a[0];
+    int pmax = 0;
+    
+    int min = a[0];
+    int pmin = 0;
+    
+    for(int i = 1; i < size; ++i){
+        if(a[i] > max){
+            max = a[i];
+            pmax = i;
+        }
+        if(a[i] < min){
+            min = a[i];
+            pmin = i;
+        }
+    }
+
+    printf("Max: %d (%d)\n", max, pmax);
+    printf("Min: %d (%d)\n", min, pmin);
+   
+    return 0;
+}
