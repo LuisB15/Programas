@@ -1,0 +1,61 @@
+#ifndef STACK_H
+#define STACK_H
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct stack{
+    int value;
+    struct stack* next;
+    void* p;
+    size_t count;
+} typedef stack;
+
+stack*s_new(void){
+    stack *s=(stack*)calloc(1,sizeof(stack));
+    if(!s){
+        return NULL;
+    }
+    return s;
+}
+void s_push(stack*s,int value){
+    if(!s) return;
+    stack *nn=(stack*)malloc(sizeof(stack));
+    nn->value=value;
+    nn->next=s->p;
+    s->p=nn;
+    ++s->count;
+}
+int s_pop(stack*s){
+    if(!s||!s->p){
+        return 0;
+    }
+    stack* tmp = s -> p;
+    int *value = s -> p -> value;
+    s -> p = s -> p -> next;
+    free(tmp);
+    s->count++;
+    return 1;
+}
+int s_peek(stack* s){
+    if(!s || !s -> next){
+        return 0;
+    }
+    return s->next->value;
+}
+int s_empty(stack*s){
+    return !s -> p;
+}
+size_t s_count(stack *s){
+    return s->count;
+}
+
+stack* s_new(void);
+void s_push(stack* s, int value);
+int s_pop(stack* s);
+int s_peek(stack* s);
+int s_empty(stack* s);
+size_t s_count(stack* s);
+
+#endif
+
