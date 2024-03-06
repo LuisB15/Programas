@@ -1,0 +1,57 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+void swap(int* a, int* b);
+
+int main(int argc, char** argv) {
+  int *fsequence;
+  int i = 0, j;
+
+  // Input validation
+  if (argc < 2) {
+    return -1;
+  }
+
+  j = (int)strtof(argv[1], NULL);
+  if (argc > 2) {
+    i = (int)strtof(argv[2], NULL);
+  }
+
+  // Ensure i <= j
+  if (i > j) {
+    swap(&i, &j);
+  }
+
+  // Allocate memory
+  fsequence = (int*)malloc((j - i + 1) * sizeof(int));
+  if (fsequence == NULL) {
+    return -1;
+  }
+
+  // Generate the sequence
+  for (int k = 0; k <= j - i; ++k) {
+    if (k <= 1) {
+      fsequence[k] = k; // Handle first two terms directly
+    } else {
+      fsequence[k] = fsequence[k - 1] + fsequence[k - 2]; // General Fibonacci calculation
+    }
+  }
+
+  // Print output
+  printf("%d", fsequence[0]);
+  for (size_t k = 1; k < j - i; ++k) {
+    printf(" %d", fsequence[k]);
+  }
+  printf("\n");
+
+  // Free memory
+  free(fsequence);
+
+  return 0;
+}
+
+void swap(int* a, int* b) {
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
