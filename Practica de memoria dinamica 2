@@ -1,0 +1,51 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <limits.h>
+
+int *a;
+
+int main(int argc, char** argv);
+void populate(float* array, int seed, int size);
+float dot(float* u, float* v,int size);
+
+int main(int argc, char** argv){
+    float *u=0;
+    float *v=0;
+
+    int size = (argc > 1) ? strtof(argv[1], NULL) : 0;
+    int seedu = (argc > 2) ? strtof(argv[2], NULL) : 0;
+    int seedv = (argc > 3) ? strtof(argv[3], NULL) : 0;
+    
+    
+    a=(int*)malloc(sizeof(int)*size);
+    u = (float*)malloc(sizeof(float)*size);
+    v = (float*)malloc(sizeof(float)*size);
+    
+    // Populate the arrays with random numbers}
+    populate(u, seedu, size);
+    populate(v, seedv, size);
+
+    // Dot product
+    printf("u dot v = %0.8f\n", dot(u, v,size));
+    
+    free(a);
+    free(u);
+    free(v);
+
+    return 0;
+}
+
+void populate(float* array, int seed,int size){
+    srand(seed);a=(int*)malloc(sizeof(int)*size);
+    for(size_t i = 0; i < size; ++i)
+        array[i] = (float)rand() / RAND_MAX;
+}
+
+float dot(float* u, float* v,int size){
+    float dp = 0;
+    for (size_t i = 0; i < size; ++i)
+        dp+= u[i]*v[i];
+    return dp;
+}
+
+
